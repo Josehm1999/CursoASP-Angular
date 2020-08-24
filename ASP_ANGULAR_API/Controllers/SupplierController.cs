@@ -28,8 +28,9 @@ namespace ASP_ANGULAR_API.Controllers
         }
         [HttpGet]
         [Route("GetPaginatedSupplier/{page:int}/{rows:int}")]
-        public IActionResult GetPaginatedCustomer(int page, int rows)
+        public IActionResult GetPaginatedSupplier(int page, int rows)
         {
+            throw new System.Exception("Error provocado");
             return Ok(_unitOfWork.Supplier.SupplierPagedList(page, rows));
         }
         [HttpPost]

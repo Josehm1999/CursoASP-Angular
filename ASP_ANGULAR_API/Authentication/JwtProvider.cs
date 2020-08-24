@@ -17,15 +17,18 @@ namespace ASP_ANGULAR_API.Authentication
 
         public JwtProvider(string issuer, string audience, string keyName)
         {
-            var parameters = new CspParameters() { KeyContainerName = keyName };
+            var parameters = new CspParameters() { 
+                KeyContainerName = keyName,
+                Flags = CspProviderFlags.UseMachineKeyStore};
             var provider = new RSACryptoServiceProvider(2048, parameters);
+
             _key = new RsaSecurityKey(provider);
             _algoritm = SecurityAlgorithms.RsaSha256Signature;
             _issuer = issuer;
             _audience = audience;
         }
 
-        public string CreateToken(User user, DateTime expires)
+        public string CreateToken(User user, DateTime expiry)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             var identity = new ClaimsIdentity(new List<Claim>()
@@ -39,7 +42,7 @@ namespace ASP_ANGULAR_API.Authentication
                 Audience = _audience,
                 Issuer = _issuer,
                 SigningCredentials = new SigningCredentials(_key, _algoritm),
-                Expires = expires.ToUniversalTime(),
+                Expires = expiry.ToUniversalTime(),
                 Subject = identity
             }) ;
             return tokenHandler.WriteToken(token);

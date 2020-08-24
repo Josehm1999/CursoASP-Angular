@@ -1,4 +1,5 @@
 using ASP_ANGULAR_API.Authentication;
+using ASP_ANGULAR_API.GlobalErrorHandling;
 using DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +59,8 @@ namespace ASP_ANGULAR_API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.ConfigureExceptionHandler();
 
             app.UseAuthentication();
 
