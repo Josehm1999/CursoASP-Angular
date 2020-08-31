@@ -24,6 +24,9 @@ namespace ASP_ANGULAR_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c =>{
+		    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+			});
             services.AddSingleton<IUnitOfWork>(option => new DAUnitOfWork(
                 Configuration.GetConnectionString("ASP_ANGULAR")));
 
@@ -43,6 +46,7 @@ namespace ASP_ANGULAR_API
                                      .RequireAuthenticatedUser()
                                      .Build();
             });
+            
             services.AddControllers();
         }
 
@@ -54,15 +58,21 @@ namespace ASP_ANGULAR_API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
+	        app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
             app.UseRouting();
+	    
+	        app.UseAuthentication();
 
             app.UseAuthorization();
 
             app.ConfigureExceptionHandler();
 
-            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using UnitOfWork;
@@ -30,7 +25,6 @@ namespace ASP_ANGULAR_API.Controllers
         [Route("GetPaginatedSupplier/{page:int}/{rows:int}")]
         public IActionResult GetPaginatedSupplier(int page, int rows)
         {
-            throw new System.Exception("Error provocado");
             return Ok(_unitOfWork.Supplier.SupplierPagedList(page, rows));
         }
         [HttpPost]
