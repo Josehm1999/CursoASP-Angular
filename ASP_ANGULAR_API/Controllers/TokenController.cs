@@ -20,7 +20,7 @@ namespace ASP_ANGULAR_API.Controllers
         [HttpPost]
         public JsonWebToken Post([FromBody]User userLogin)
         {
-            var user = _unitOfWork.User.ValidateUser(userLogin.Email, userLogin.Pssword);
+            var user = _unitOfWork.User.ValidateUser(userLogin.Email, userLogin.Password);
             if (user==null)
             {
                 throw new UnauthorizedAccessException();

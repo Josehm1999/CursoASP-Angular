@@ -5,6 +5,7 @@ namespace Repositories
 {
     public interface ICustomerRepository:IRepository<Customer>
     {
-        IEnumerable<Customer> CustomerPagedList(int page, int rows);
+        IEnumerable<CustomerList> CustomerPagedList(int page, int rows);
+
     }
 }
