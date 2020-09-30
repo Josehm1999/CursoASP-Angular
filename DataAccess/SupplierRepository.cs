@@ -15,11 +15,12 @@ namespace DataAccess
 
         }
 
-        public IEnumerable<Supplier> SupplierPagedList(int page, int rows)
+        public IEnumerable<Supplier> SupplierPagedList(int page, int rows, string searchTerm)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@page", page);
             parameters.Add("@rows", rows);
+            parameters.Add("@searchTerm", searchTerm);
             using var connection = new SqlConnection(_connectionString);
             return connection.Query<Supplier>("dbo.SupplierPagedList", parameters, commandType: System.Data.CommandType.StoredProcedure);
         }

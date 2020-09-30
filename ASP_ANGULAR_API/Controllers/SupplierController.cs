@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ASP_ANGULAR_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using UnitOfWork;
@@ -21,11 +22,11 @@ namespace ASP_ANGULAR_API.Controllers
         {
             return Ok(_unitOfWork.Supplier.GetById(Id));
         }
-        [HttpGet]
-        [Route("GetPaginatedSupplier/{page:int}/{rows:int}")]
-        public IActionResult GetPaginatedSupplier(int page, int rows)
+        [HttpPost]
+        [Route("GetPaginatedSupplier")]
+        public IActionResult GetPaginatedSupplier([FromBody]getPaginatedSupplier request)
         {
-            return Ok(_unitOfWork.Supplier.SupplierPagedList(page, rows));
+            return Ok(_unitOfWork.Supplier.SupplierPagedList(request.Page, request.Rows, request.searchTerm));
         }
         [HttpPost]
         public IActionResult Post([FromBody]Supplier supplier)
