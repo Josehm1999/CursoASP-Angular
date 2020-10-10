@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SystemsBusinnessLogic.Implementations;
+using SystemsBusinnessLogic.Interfaces;
 using UnitOfWork;
 
 namespace ASP_ANGULAR_API
@@ -24,6 +26,10 @@ namespace ASP_ANGULAR_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ISupplierLogic, SupplierLogic>();
+            services.AddTransient<ICustomerLogic, CustomerLogic>();
+            services.AddTransient<IOrderLogic, OrderLogic>();
+            services.AddTransient<ITokenLogic, TokenLogic>();
             services.AddCors(c =>{
 		    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
 			});

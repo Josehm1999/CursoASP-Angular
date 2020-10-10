@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UnitOfWork;
+using SystemsBusinnessLogic.Interfaces;
 
 namespace ASP_ANGULAR_API.Controllers
 {
@@ -14,17 +9,17 @@ namespace ASP_ANGULAR_API.Controllers
     [Authorize]
     public class OrderController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public OrderController(IUnitOfWork unitOfWork)
+        private readonly IOrderLogic _logic;
+        public OrderController(IOrderLogic logic)
         {
-            _unitOfWork = unitOfWork;
+            _logic = logic;
         }
 
         [HttpGet]
         [Route("GetPaginatedOrders/{page:int}/{rows:int}")]
         public IActionResult GetPaginatedOrders(int page, int rows)
         {
-            return Ok(_unitOfWork.Order.getPaginatedOrder(page, rows));
+            return Ok(_logic.GetPaginatedOrders(page, rows));
         }
 
 
@@ -32,7 +27,15 @@ namespace ASP_ANGULAR_API.Controllers
         [Route("GetOrderById/{orderId:int}")]
         public IActionResult GetOrderById(int orderId)
         {
-            return Ok(_unitOfWork.Order.GetOrderById(orderId));
+            return Ok(_logic.GetOrderById(orderId));
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var request = _logic.GetById(id);
+            return Ok(_logic.Delete(request));
+        }
+
     }
 }

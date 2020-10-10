@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
-using UnitOfWork;
+using SystemsBusinnessLogic.Interfaces;
 
 namespace ASP_ANGULAR_API.Controllers
 {
@@ -11,16 +11,16 @@ namespace ASP_ANGULAR_API.Controllers
     public class TokenController : ControllerBase
     {
         private ITokenProvider _tokenProvider;
-        private IUnitOfWork _unitOfWork;
-        public TokenController(ITokenProvider tokenProvider, IUnitOfWork unitOfWork)
+        private ITokenLogic _logic;
+        public TokenController(ITokenProvider tokenProvider, ITokenLogic logic)
         {
             _tokenProvider = tokenProvider;
-            _unitOfWork = unitOfWork;
+            _logic = logic;
         }
         [HttpPost]
         public JsonWebToken Post([FromBody]User userLogin)
         {
-            var user = _unitOfWork.User.ValidateUser(userLogin.Email, userLogin.Password);
+            var user = _logic.ValidateUser(userLogin.Email, userLogin.Password);
             if (user==null)
             {
                 throw new UnauthorizedAccessException();

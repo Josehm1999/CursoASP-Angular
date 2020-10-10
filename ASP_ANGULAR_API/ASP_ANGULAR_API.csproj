@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\SystemsBusinnessLogic\SystemsBusinnessLogic.csproj" />
     <ProjectReference Include="..\UnidadDeTrabajo\UnitOfWork.csproj" />
   </ItemGroup>
 
